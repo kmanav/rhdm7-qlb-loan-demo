@@ -306,7 +306,7 @@ function create_application() {
   echo ""
   echo "Creating config-map."
   echo ""
-  oc create configmap qlb-client-application-config-map --from-file=config/config.js
+  oc create configmap qlb-client-application-config-map --from-file=https://raw.githubusercontent.com/kmanav/rhdm7-qlb-loan-demo/master/support/openshift/config/config.js
   # Attach config-map as volume to client-application DC
   # Use oc patch
   echo ""
