@@ -297,16 +297,17 @@ function create_application() {
   # Retrieve KIE-Server route.
   KIESERVER_ROUTE=$(oc get route rhdm7-qlb-loan-kieserver | awk 'FNR > 1 {print $2}')
   # Set the KIESERVER_ROUTE into our application config file:
-  sed s/.*kieserver_host.*/\ \ \ \ \'kieserver_host\'\ :\ \'$KIESERVER_ROUTE\',/g config/config.js.orig > config/config.js.temp.1
-  sed s/.*kieserver_port.*/\ \ \ \ \'kieserver_port\'\ :\ \'80\',/g config/config.js.temp.1 > config/config.js.temp.2
-  mv config/config.js.temp.2 config/config.js
-  rm config/config.js.temp*
+  #sed s/.*kieserver_host.*/\ \ \ \ \'kieserver_host\'\ :\ \'$KIESERVER_ROUTE\',/g config/config.js.orig > config/config.js.temp.1
+  #sed s/.*kieserver_host.*/\ \ \ \ \'kieserver_host\'\ :\ \'$KIESERVER_ROUTE\',/g config/config.js > config/config.js.temp.1
+  #sed s/.*kieserver_port.*/\ \ \ \ \'kieserver_port\'\ :\ \'80\',/g config/config.js.temp.1 > config/config.js.temp.2
+  #mv config/config.js.temp.2 config/config.js
+  #rm config/config.js.temp*
 
   # Create config-map
   echo ""
   echo "Creating config-map."
   echo ""
-  oc create configmap qlb-client-application-config-map --from-file=https://raw.githubusercontent.com/kmanav/rhdm7-qlb-loan-demo/master/support/openshift/config/config.js
+  oc create configmap qlb-client-application-config-map --from-file=./support/openshift/config/config.js
   # Attach config-map as volume to client-application DC
   # Use oc patch
   echo ""
