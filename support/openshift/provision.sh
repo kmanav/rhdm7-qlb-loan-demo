@@ -152,7 +152,8 @@ OPENSHIFT_USER=${ARG_USERNAME:-$LOGGEDIN_USER}
 
 # Project name needs to be unique across OpenShift Online
 PRJ_SUFFIX=${ARG_PROJECT_SUFFIX:-`echo $OPENSHIFT_USER | sed -e 's/[^-a-z0-9]/-/g'`}
-PRJ=("rhdm7-qlb-loan-$PRJ_SUFFIX" "RHDM7 Quick Loan Bank Demo" "Red Hat Decision Manager 7 Quick Loan Bank Demo")
+#PRJ=("rhdm7-qlb-loan-$PRJ_SUFFIX" "RHDM7 Quick Loan Bank Demo" "Red Hat Decision Manager 7 Quick Loan Bank Demo")
+PRJ=("rhdm7-qlb-loan" "RHDM7 Quick Loan Bank Demo" "Red Hat Decision Manager 7 Quick Loan Bank Demo")
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -255,7 +256,7 @@ function import_imagestreams_and_templates() {
 # Create a patched KIE-Server image with CORS support.
 function deploy_kieserver_cors() {
   echo_header "RHDM 7.0 KIE-Server with CORS support..."
-  oc process -f $SCRIPT_DIR/rhdm70-kieserver-cors.yaml -p DOCKERFILE_REPOSITORY="http://www.github.com/jbossdemocentral/rhdm7-qlb-loan-demo" -p DOCKERFILE_REF="development" -p DOCKERFILE_CONTEXT=support/openshift/rhdm70-kieserver-cors -n ${PRJ[0]} | oc create -n ${PRJ[0]} -f -
+  oc process -f $SCRIPT_DIR/rhdm70-kieserver-cors.yaml -p DOCKERFILE_REPOSITORY="http://www.github.com/kmanav/rhdm7-qlb-loan-demo" -p DOCKERFILE_REF="development" -p DOCKERFILE_CONTEXT=support/openshift/rhdm70-kieserver-cors -n ${PRJ[0]} | oc create -n ${PRJ[0]} -f -
 }
 
 function import_secrets_and_service_account() {
@@ -292,7 +293,7 @@ function create_application() {
 
 
   echo_header "Creating Quick Loan Bank client application"
-  oc new-app nodejs:6~https://github.com/jbossdemocentral/rhdm7-qlb-loan-demo#development --name=qlb-client-application --context-dir=support/application-ui -e NODE_ENV=development --build-env NODE_ENV=development
+  oc new-app nodejs:6~https://github.com/kmanav/rhdm7-qlb-loan-demo#development --name=qlb-client-application --context-dir=support/application-ui -e NODE_ENV=development --build-env NODE_ENV=development
 
   # Retrieve KIE-Server route.
   KIESERVER_ROUTE=$(oc get route rhdm7-qlb-loan-kieserver | awk 'FNR > 1 {print $2}')

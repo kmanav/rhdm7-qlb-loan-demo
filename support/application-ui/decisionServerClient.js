@@ -23,8 +23,8 @@ angular.module('demo', [])
     $scope.fireRules = function(){
         console.log("fireRules! ");
         console.log("KIE-Server host: " + ENV.kieserver_host);
-        console.log("KIE-Server port:" + ENV.kieserver_port);
-        console.log("KIE-Server ContextRoot: " + ENV.kieserver_contextroot);
+        //console.log("KIE-Server port:" + ENV.kieserver_port);
+        //console.log("KIE-Server ContextRoot: " + ENV.kieserver_contextroot);
         console.log("KIE-Server containerId: " + ENV.kieserver_containerId);
         console.log("User: " + ENV.kieserver_user);
         console.log("Password: " + ENV.kieserver_password );
